@@ -8,6 +8,7 @@ import { modals, initModals } from './modals/init-modals';
 
 import FlowersApiService from './api/flowers-api-service';
 import FlowersModel from './model/flowers-model';
+import BoardPresenter from './presenter/board-presenter';
 
 // Код для работы попапов, не удаляйте его
 window.addEventListener('DOMContentLoaded', () => {
@@ -38,8 +39,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const AUTHORIZATION = 'Basic sv74dlm5qor';
   const END_POINT = 'https://grading.objects.pages.academy/flowers-shop';
 
+  const mainContainer = document.querySelector('main');
   const flowersModel = new FlowersModel({
     flowersApiService: new FlowersApiService(END_POINT, AUTHORIZATION)
   });
+  const boardPresenter = new BoardPresenter({
+    flowersModel,
+    mainContainer: mainContainer
+  });
+
+  boardPresenter.init();
   flowersModel.init();
 });
