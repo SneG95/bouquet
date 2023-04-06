@@ -1,11 +1,15 @@
 import { render } from '../framework/render.js';
 import HeaderView from '../view/header-view.js';
+import HeroView from '../view/hero-view.js';
+import MissionView from '../view/mission-view.js';
 
 export default class BoardPresenter {
   #flowersModel = null;
   #mainContainer = null;
   #headerComponent = null;
   #headerContainer = null;
+  #heroComponent = null;
+  #missionComponent = null;
 
   constructor({flowersModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
@@ -23,10 +27,22 @@ export default class BoardPresenter {
 
   #renderBoard() {
     this.#renderHeader();
+    this.#renderHero();
+    this.#renderMission();
   }
 
   #renderHeader() {
     this.#headerComponent = new HeaderView();
     render(this.#headerComponent, this.#headerContainer);
+  }
+
+  #renderHero() {
+    this.#heroComponent = new HeroView();
+    render(this.#heroComponent, this.#mainContainer);
+  }
+
+  #renderMission() {
+    this.#missionComponent = new MissionView();
+    render(this.#missionComponent, this.#mainContainer);
   }
 }
