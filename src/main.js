@@ -40,12 +40,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const END_POINT = 'https://grading.objects.pages.academy/flowers-shop';
 
   const mainContainer = document.querySelector('main');
+  const headerContainer = document.querySelector('.header__wrapper');
   const flowersModel = new FlowersModel({
     flowersApiService: new FlowersApiService(END_POINT, AUTHORIZATION)
   });
   const boardPresenter = new BoardPresenter({
     flowersModel,
-    mainContainer: mainContainer
+    mainContainer: mainContainer,
+    headerContainer: headerContainer
   });
 
   boardPresenter.init();
