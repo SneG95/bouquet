@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/main.js",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, 'build'),
     clean: true,
   },
   devtool: "source-map",
@@ -21,6 +21,10 @@ module.exports = {
         exclude: /(node_modules)/,
         use: ["babel-loader"],
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      }
     ],
   },
 };
