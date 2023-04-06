@@ -6,6 +6,9 @@ import { modals, initModals } from './modals/init-modals';
 
 // Ваши импорты...
 
+import FlowersApiService from './api/flowers-api-service';
+import FlowersModel from './model/flowers-model';
+
 // Код для работы попапов, не удаляйте его
 window.addEventListener('DOMContentLoaded', () => {
   iosVhFix();
@@ -33,5 +36,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Ваш код...
   const AUTHORIZATION = 'Basic sv74dlm5qor';
-  const END_POINT = 'https://grading.objects.pages.academy';
+  const END_POINT = 'https://grading.objects.pages.academy/flowers-shop';
+
+  const flowersModel = new FlowersModel({
+    flowersApiService: new FlowersApiService(END_POINT, AUTHORIZATION)
+  });
+  flowersModel.init();
 });
