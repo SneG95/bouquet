@@ -2,6 +2,7 @@ import { render } from '../framework/render.js';
 import HeaderView from '../view/header-view.js';
 import HeroView from '../view/hero-view.js';
 import MissionView from '../view/mission-view.js';
+import AdvantageView from '../view/advantage-view.js';
 
 export default class BoardPresenter {
   #flowersModel = null;
@@ -10,6 +11,7 @@ export default class BoardPresenter {
   #headerContainer = null;
   #heroComponent = null;
   #missionComponent = null;
+  #advantageComponent = null;
 
   constructor({flowersModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
@@ -29,6 +31,7 @@ export default class BoardPresenter {
     this.#renderHeader();
     this.#renderHero();
     this.#renderMission();
+    this.#renderAdvantage();
   }
 
   #renderHeader() {
@@ -44,5 +47,10 @@ export default class BoardPresenter {
   #renderMission() {
     this.#missionComponent = new MissionView();
     render(this.#missionComponent, this.#mainContainer);
+  }
+
+  #renderAdvantage() {
+    this.#advantageComponent = new AdvantageView();
+    render(this.#advantageComponent, this.#mainContainer);
   }
 }
