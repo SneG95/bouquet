@@ -50,4 +50,14 @@ const ColorDescription = {
   PINK: 'розовый'
 };
 
-export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType };
+const SortType = {
+  INCREASE: 'increase',
+  DESCENDING: 'descending'
+};
+
+const SortTypeDescription = {
+  INCREASE: 'сортировка по возрастанию цены',
+  DESCENDING: 'сортировка по убыванию цены'
+};
+
+export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription };

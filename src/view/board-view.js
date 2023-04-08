@@ -14,4 +14,8 @@ export default class BoardView extends AbstractView {
   get template() {
     return createBoardTemplate();
   }
+
+  get sortContainer() {
+    return this.element.querySelector('.catalogue__header');
+  }
 }

@@ -5,6 +5,8 @@ import MissionView from '../view/mission-view.js';
 import AdvantageView from '../view/advantage-view.js';
 import FilterPresenter from './filter-presenter.js';
 import BoardView from '../view/board-view.js';
+import SortView from '../view/sort-view.js';
+import { SortType } from '../consts.js';
 
 export default class BoardPresenter {
   #flowersModel = null;
@@ -16,6 +18,8 @@ export default class BoardPresenter {
   #missionComponent = null;
   #advantageComponent = null;
   #boardComponent = new BoardView();
+  #currentSortType = SortType.INCREASE;
+  #sortComponent = null;
 
   constructor({flowersModel, filterModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
@@ -39,6 +43,7 @@ export default class BoardPresenter {
     this.#renderAdvantage();
     this.#renderFilters();
     render(this.#boardComponent, this.#mainContainer);
+    this.#renderSort();
   }
 
   #renderHeader() {
@@ -70,4 +75,23 @@ export default class BoardPresenter {
 
     filterPresenter.init();
   }
+
+  #renderSort() {
+    this.#sortComponent = new SortView({
+      onSortTypeChange: this.#handleSortTypeChange,
+      currentSortType : this.#currentSortType
+    });
+
+    render(this.#sortComponent, this.#boardComponent.sortContainer);
+  }
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#currentSortType = sortType;
+    /*this.#clearBoard({resetRenderedFilmCount: true});
+    this.#renderBoard();*/
+  };
 }
