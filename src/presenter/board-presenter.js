@@ -6,6 +6,7 @@ import AdvantageView from '../view/advantage-view.js';
 import FilterPresenter from './filter-presenter.js';
 import BoardView from '../view/board-view.js';
 import SortView from '../view/sort-view.js';
+import FlowersListView from '../view/flowers-list-view.js';
 import { SortType } from '../consts.js';
 
 export default class BoardPresenter {
@@ -20,6 +21,7 @@ export default class BoardPresenter {
   #boardComponent = new BoardView();
   #currentSortType = SortType.INCREASE;
   #sortComponent = null;
+  #flowersListComponent = new FlowersListView();
 
   constructor({flowersModel, filterModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
@@ -44,6 +46,7 @@ export default class BoardPresenter {
     this.#renderFilters();
     render(this.#boardComponent, this.#mainContainer);
     this.#renderSort();
+    this.#renderFlowersList();
   }
 
   #renderHeader() {
@@ -83,6 +86,10 @@ export default class BoardPresenter {
     });
 
     render(this.#sortComponent, this.#boardComponent.sortContainer);
+  }
+
+  #renderFlowersList() {
+    render(this.#flowersListComponent, this.#boardComponent.element);
   }
 
   #handleSortTypeChange = (sortType) => {
