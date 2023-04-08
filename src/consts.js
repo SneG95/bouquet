@@ -7,6 +7,14 @@ const FilterReasonType = {
   DARLING: 'darling'
 };
 
+const ServerReasonType = {
+  BIRTHDAY: 'birthdayboy',
+  BRIDE: 'bridge',
+  MOTHER: 'motherday',
+  COLLEAGUE: 'colleagues',
+  DARLING: 'forlove'
+};
+
 const ReasonDescription = {
   ALL: 'Для всех',
   BIRTHDAY: 'Имениннику',
@@ -20,7 +28,15 @@ const FilterColorType = {
   ALL: 'all',
   RED: 'red',
   WHITE: 'white',
-  LILIAC : 'lilac',
+  LILAC : 'lilac',
+  YELLOW: 'yellow',
+  PINK: 'pink'
+};
+
+const ServerColorType = {
+  RED: 'red',
+  WHITE: 'white',
+  LILAC : 'violet',
   YELLOW: 'yellow',
   PINK: 'pink'
 };
@@ -29,9 +45,9 @@ const ColorDescription = {
   ALL: 'все цвета',
   RED: 'красный',
   WHITE: 'белый',
-  LILIAC : 'сиреневый',
+  LILAC : 'сиреневый',
   YELLOW: 'жёлтый',
   PINK: 'розовый'
 };
 
-export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription };
+export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType };

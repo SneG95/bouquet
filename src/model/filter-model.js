@@ -3,14 +3,14 @@ import { FilterReasonType, FilterColorType } from '../consts.js';
 
 export default class FilterModel extends Observable {
   #reasonFilter = FilterReasonType.ALL;
-  #colorFilter = FilterColorType.ALL;
+  #colorFilters = FilterColorType.ALL;
 
   get reasonFilter() {
     return this.#reasonFilter;
   }
 
-  get colorFilter() {
-    return this.#colorFilter;
+  get colorFilters() {
+    return this.#colorFilters;
   }
 
   setReasonFilter(updateType, reasonFilter) {
@@ -19,7 +19,7 @@ export default class FilterModel extends Observable {
   }
 
   setColorFilter(updateType, colorFilter) {
-    this.#colorFilter = colorFilter;
-    this._notify(updateType, colorFilter);
+    /*this.#colorFilters = colorFilter;
+    this._notify(updateType, colorFilter);*/
   }
 }

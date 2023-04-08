@@ -8,6 +8,7 @@ import { modals, initModals } from './modals/init-modals';
 
 import FlowersApiService from './api/flowers-api-service';
 import FlowersModel from './model/flowers-model';
+import FilterModel from './model/filter-model';
 import BoardPresenter from './presenter/board-presenter';
 
 // Код для работы попапов, не удаляйте его
@@ -44,8 +45,10 @@ window.addEventListener('DOMContentLoaded', () => {
   const flowersModel = new FlowersModel({
     flowersApiService: new FlowersApiService(END_POINT, AUTHORIZATION)
   });
+  const filterModel = new FilterModel();
   const boardPresenter = new BoardPresenter({
     flowersModel,
+    filterModel,
     mainContainer: mainContainer,
     headerContainer: headerContainer
   });

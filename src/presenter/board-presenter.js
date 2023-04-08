@@ -3,9 +3,11 @@ import HeaderView from '../view/header-view.js';
 import HeroView from '../view/hero-view.js';
 import MissionView from '../view/mission-view.js';
 import AdvantageView from '../view/advantage-view.js';
+import FilterPresenter from './filter-presenter.js';
 
 export default class BoardPresenter {
   #flowersModel = null;
+  #filterModel = null;
   #mainContainer = null;
   #headerComponent = null;
   #headerContainer = null;
@@ -13,8 +15,9 @@ export default class BoardPresenter {
   #missionComponent = null;
   #advantageComponent = null;
 
-  constructor({flowersModel, mainContainer, headerContainer}) {
+  constructor({flowersModel, filterModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
+    this.#filterModel = filterModel;
     this.#mainContainer = mainContainer;
     this.#headerContainer = headerContainer;
   }
@@ -32,6 +35,7 @@ export default class BoardPresenter {
     this.#renderHero();
     this.#renderMission();
     this.#renderAdvantage();
+    this.#renderFilters();
   }
 
   #renderHeader() {
@@ -52,5 +56,15 @@ export default class BoardPresenter {
   #renderAdvantage() {
     this.#advantageComponent = new AdvantageView();
     render(this.#advantageComponent, this.#mainContainer);
+  }
+
+  #renderFilters() {
+    const filterPresenter = new FilterPresenter({
+      filterContainer: this.#mainContainer,
+      filterModel: this.#filterModel,
+      flowersModel: this.#flowersModel
+    });
+
+    filterPresenter.init();
   }
 }
