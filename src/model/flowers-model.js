@@ -1,4 +1,5 @@
 import Observable from '../framework/observable.js';
+import { UpdateType } from '../consts.js';
 
 export default class FlowersModel extends Observable {
   #flowersApiService = null;
@@ -16,9 +17,10 @@ export default class FlowersModel extends Observable {
   async init() {
     try {
       this.#flowers = await this.#flowersApiService.flowers;
-      console.log(this.#flowers);
     } catch(err) {
       this.#flowers = [];
     }
+
+    this._notify(UpdateType.INIT);
   }
 }

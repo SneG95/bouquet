@@ -28,7 +28,8 @@ const createFlowerCardTemplate = (flower) => {
             </svg>
           </button>
           <picture>
-            <source type="image/webp" srcset="${imgSourse}.webp, ${imgSourse}@2x.webp 2x"><img src="${imgSourse}.png" srcset="${imgSourse}@2x.png 2x" width="244" height="412" alt="${getAltTextImage(imgSourse)}">
+            <source type="image/png" srcset="${imgSourse}.png, ${imgSourse}@2x.png 2x">
+            <img src="${imgSourse}.png" srcset="${imgSourse}@2x.png 2x" width="244" height="412" alt="${getAltTextImage(imgSourse)}">
           </picture>
         </div>
             <div class="item-card__desc-wrap">

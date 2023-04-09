@@ -53,6 +53,6 @@ window.addEventListener('DOMContentLoaded', () => {
     headerContainer: headerContainer
   });
 
-  boardPresenter.init();
   flowersModel.init();
+  //boardPresenter.init();
 });
