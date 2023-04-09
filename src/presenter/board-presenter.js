@@ -7,7 +7,6 @@ import FilterPresenter from './filter-presenter.js';
 import BoardView from '../view/board-view.js';
 import SortView from '../view/sort-view.js';
 import FlowersListView from '../view/flowers-list-view.js';
-import FlowerCardView from '../view/flower-card-view.js';
 import { SortType } from '../consts.js';
 
 export default class BoardPresenter {
