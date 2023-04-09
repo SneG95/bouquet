@@ -16,6 +16,7 @@ export default class FlowersModel extends Observable {
   async init() {
     try {
       this.#flowers = await this.#flowersApiService.flowers;
+      console.log(this.#flowers);
     } catch(err) {
       this.#flowers = [];
     }

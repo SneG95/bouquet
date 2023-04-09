@@ -1,4 +1,6 @@
-import { FilterReasonType, FilterColorType, ServerReasonType, ServerColorType } from './consts.js';
+import { FilterReasonType, FilterColorType, ServerReasonType, ServerColorType, ImageType } from './consts.js';
+
+const MAX_DESCRIPTION_LENGTH = 139;
 
 const filter = {
   [FilterReasonType.ALL]: (flowers) => flowers,
@@ -15,4 +17,14 @@ const filter = {
   [FilterColorType.PINK]: (flowers) => flowers.filter((flower) => flower.color === ServerColorType.PINK)
 };
 
-export { filter };
+const getClippedDescription = (description) => `${description.slice(0, MAX_DESCRIPTION_LENGTH)}...`;
+
+const getImageSource = (source) => source.split(`/${ImageType.PNG}|,|${ImageType.WEBP}/`)[0];
+
+const getAltTextImage = (source) => {
+  const items = source.split('/');
+  const altIndex = items.length - 1;
+  return items[altIndex];
+};
+
+export { filter, getClippedDescription, getImageSource, getAltTextImage };

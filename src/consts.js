@@ -60,4 +60,9 @@ const SortTypeDescription = {
   DESCENDING: 'сортировка по убыванию цены'
 };
 
-export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription };
+const ImageType = {
+  PNG: '.png',
+  WEBP: '.webp'
+};
+
+export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription, ImageType };
