@@ -27,4 +27,30 @@ const getAltTextImage = (source) => {
   return items[altIndex];
 };
 
-export { filter, getClippedDescription, getImageSource, getAltTextImage };
+const getWeightForNull = (dataA, dataB) => {
+  if (dataA === null && dataB === null) {
+    return 0;
+  }
+
+  if (dataA === null) {
+    return 1;
+  }
+
+  if (dataB === null) {
+    return -1;
+  }
+
+  return null;
+};
+
+const sortPriceDown = (flowerA, flowerB) => {
+  const weight = getWeightForNull(flowerA.price, flowerB.price);
+  return weight ?? flowerB.price - flowerA.price;
+};
+
+const sortPriceUp = (flowerA, flowerB) => {
+  const weight = getWeightForNull(flowerA.price, flowerB.price);
+  return weight ?? flowerA.price - flowerB.price;
+};
+
+export { filter, getClippedDescription, getImageSource, getAltTextImage, sortPriceDown, sortPriceUp };

@@ -23,6 +23,10 @@ export default class FlowerPresenter {
       render(this.#flowerCardComponent, this.#flowersListContainer);
       //return;
     }
+  }
 
+  destroy() {
+    remove(this.#flowerCardComponent);
+    //remove(this.#filmPopupComponent);
   }
 }

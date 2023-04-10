@@ -3,7 +3,7 @@ import { FilterReasonType, FilterColorType } from '../consts.js';
 
 export default class FilterModel extends Observable {
   #reasonFilter = FilterReasonType.ALL;
-  #colorFilters = FilterColorType.ALL;
+  #colorFilters = [FilterColorType.ALL];
 
   get reasonFilter() {
     return this.#reasonFilter;

@@ -11,13 +11,16 @@ import FlowersListView from '../view/flowers-list-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UpButtonView from '../view/up-button-view.js';
 import FlowerPresenter from './flower-presenter.js';
-import { SortType, UpdateType } from '../consts.js';
+import { SortType, UpdateType, FilterReasonType, FilterColorType } from '../consts.js';
+import { sortPriceDown, sortPriceUp } from '../utils.js';
 
 const FLOWER_COUNT_PER_STEP = 6;
 
 export default class BoardPresenter {
   #flowersModel = null;
   #filterModel = null;
+  #filterReasonType = FilterReasonType.ALL;
+  #filterColorTypes = [FilterColorType.ALL];
   #mainContainer = null;
   #headerComponent = null;
   #headerContainer = null;
@@ -25,7 +28,7 @@ export default class BoardPresenter {
   #missionComponent = null;
   #advantageComponent = null;
   #boardComponent = new BoardView();
-  #currentSortType = SortType.INCREASE;
+  #currentSortType = SortType.DEFAULT;
   #sortComponent = null;
   #flowersListComponent = new FlowersListView();
   #buttonsListComponent = new ButtonsListView();
@@ -44,7 +47,19 @@ export default class BoardPresenter {
   }
 
   get flowers() {
-    return this.#flowersModel.flowers;
+    this.#filterReasonType = this.#filterModel.reasonFilter;
+    this.#filterColorTypes = this.#filterModel.colorFilters;
+    const flowers = this.#flowersModel.flowers;
+    const filteredFlowers = flowers;
+
+    switch (this.#currentSortType) {
+      case SortType.INCREASE:
+        return filteredFlowers.slice().sort(sortPriceUp);
+      case SortType.DESCENDING:
+        return filteredFlowers.slice().sort(sortPriceDown);
+    }
+
+    return filteredFlowers;
   }
 
   init() {
@@ -145,20 +160,37 @@ export default class BoardPresenter {
     render(this.#upButtonComponent, this.#buttonsListComponent.element);
   }
 
+  #clearBoard({resetRenderedFlowerCount = false, resetSortType = false} = {}) {
+    const flowerCount = this.flowers.length;
+
+    this.#flowerPresenters.forEach((presenter) => presenter.destroy());
+    this.#flowerPresenters.clear();
+
+    remove(this.#headerComponent);
+    remove(this.#sortComponent);
+    remove(this.#showMoreButtonComponent);
+
+    this.#renderedFlowerCount = resetRenderedFlowerCount ? FLOWER_COUNT_PER_STEP : Math.min(flowerCount, this.#renderedFlowerCount);
+
+    if (resetSortType) {
+      this.#currentSortType = SortType.DEFAULT;
+    }
+  }
+
   #handleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType) {
       return;
     }
 
     this.#currentSortType = sortType;
-    /*this.#clearBoard({resetRenderedFilmCount: true});
-    this.#renderBoard();*/
+    this.#clearBoard({resetRenderedFilmCount: true});
+    this.#renderBoard();
   };
 
   #handleModelEvent = (updateType, data) => {
     switch (updateType) {
-      /*case UpdateType.PATCH:
-        this.#pointPresenters.get(data.id).init(data);
+      case UpdateType.PATCH:
+        this.#flowerPresenters.get(data.id).init(data);
         break;
       case UpdateType.MINOR:
         this.#clearBoard();
@@ -167,7 +199,7 @@ export default class BoardPresenter {
       case UpdateType.MAJOR:
         this.#clearBoard({resetSortType: true});
         this.#renderBoard();
-        break;*/
+        break;
       case UpdateType.INIT:
         /*this.#isLoading = false;
         remove(this.#loadingComponent);*/

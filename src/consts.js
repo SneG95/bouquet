@@ -51,6 +51,7 @@ const ColorDescription = {
 };
 
 const SortType = {
+  DEFAULT: 'default',
   INCREASE: 'increase',
   DESCENDING: 'descending'
 };
