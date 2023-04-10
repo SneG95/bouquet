@@ -122,7 +122,7 @@ export default class FilterPresenter {
     this.#filterModel.setReasonFilter(UpdateType.MAJOR, filterType);
   };
 
-  #handleFilterColorTypeChange = () => {
-
+  #handleFilterColorTypeChange = (filterType) => {
+    this.#filterModel.setColorFilter(UpdateType.MAJOR, filterType);
   };
 }

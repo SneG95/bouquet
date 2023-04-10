@@ -203,7 +203,7 @@ export default class BoardPresenter {
         this.#renderBoard();
         break;
       case UpdateType.MAJOR:
-        this.#clearBoard({resetSortType: true});
+        this.#clearBoard({resetRenderedFlowerCount: true, resetSortType: true});
         this.#renderBoard();
         break;
       case UpdateType.INIT:

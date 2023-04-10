@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import { getFilterValue } from '../utils.js';
 
-const createColorItemTemplate = (filter, currentFilterType, index) => {
+const createColorItemTemplate = (filter, currentFilterTypes, index) => {
   const {name, description} = filter;
   return (`
     <div class="filter-field-img filter-color__form-field">
@@ -10,7 +11,7 @@ const createColorItemTemplate = (filter, currentFilterType, index) => {
             id="filter-colors-field-id-${index}"
             name="colors"
             value="color-${name}"
-            ${currentFilterType ? 'checked' : ''}
+            ${currentFilterTypes.includes(name) ? 'checked' : ''}
             data-filter-color="color-${name}">
         <label class="filter-field-img__label" for="filter-colors-field-id-${index}">
           <span class="filter-field-img__img">
@@ -65,6 +66,6 @@ export default class FilterColorView extends AbstractView {
 
   #filterColorTypeChangeHandler = (evt) => {
     evt.preventDefault();
-    this.#handleFilterColorTypeChange(evt.target.value);
+    this.#handleFilterColorTypeChange(getFilterValue(evt.target.value));
   };
 }
