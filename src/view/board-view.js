@@ -18,4 +18,8 @@ export default class BoardView extends AbstractView {
   get sortContainer() {
     return this.element.querySelector('.catalogue__header');
   }
+
+  get catalogueContainer() {
+    return this.element.querySelector('.container');
+  }
 }
