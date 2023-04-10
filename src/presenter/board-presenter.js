@@ -12,7 +12,7 @@ import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UpButtonView from '../view/up-button-view.js';
 import FlowerPresenter from './flower-presenter.js';
 import { SortType, UpdateType, FilterReasonType, FilterColorType } from '../consts.js';
-import { sortPriceDown, sortPriceUp } from '../utils.js';
+import { sortPriceDown, sortPriceUp, filter } from '../utils.js';
 
 const FLOWER_COUNT_PER_STEP = 6;
 
@@ -21,6 +21,7 @@ export default class BoardPresenter {
   #filterModel = null;
   #filterReasonType = FilterReasonType.ALL;
   #filterColorTypes = [FilterColorType.ALL];
+  #filterPresenter = null;
   #mainContainer = null;
   #headerComponent = null;
   #headerContainer = null;
@@ -44,13 +45,14 @@ export default class BoardPresenter {
     this.#headerContainer = headerContainer;
 
     this.#flowersModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get flowers() {
     this.#filterReasonType = this.#filterModel.reasonFilter;
     this.#filterColorTypes = this.#filterModel.colorFilters;
     const flowers = this.#flowersModel.flowers;
-    const filteredFlowers = flowers;
+    const filteredFlowers = filter[this.#filterReasonType](flowers);
 
     switch (this.#currentSortType) {
       case SortType.INCREASE:
@@ -109,13 +111,13 @@ export default class BoardPresenter {
   }
 
   #renderFilters() {
-    const filterPresenter = new FilterPresenter({
+    this.#filterPresenter = new FilterPresenter({
       filterContainer: this.#mainContainer,
       filterModel: this.#filterModel,
       flowersModel: this.#flowersModel
     });
 
-    filterPresenter.init();
+    this.#filterPresenter.init();
   }
 
   #renderSort() {
@@ -165,8 +167,12 @@ export default class BoardPresenter {
 
     this.#flowerPresenters.forEach((presenter) => presenter.destroy());
     this.#flowerPresenters.clear();
+    this.#filterPresenter.destroy();
 
     remove(this.#headerComponent);
+    remove(this.#heroComponent);
+    remove(this.#missionComponent);
+    remove(this.#advantageComponent);
     remove(this.#sortComponent);
     remove(this.#showMoreButtonComponent);
 

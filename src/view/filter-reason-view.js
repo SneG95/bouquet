@@ -1,4 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import { getFilterValue } from '../utils.js';
 
 const createReasonItemTemplate = (filter, currentFilterType, index) => {
   const {name, description} = filter;
@@ -57,6 +58,6 @@ export default class FilterReasonView extends AbstractView {
 
   #filterReasonTypeChangeHandler = (evt) => {
     evt.preventDefault();
-    this.#handleFilterReasonTypeChange(evt.target.value);
+    this.#handleFilterReasonTypeChange(getFilterValue(evt.target.value));
   };
 }

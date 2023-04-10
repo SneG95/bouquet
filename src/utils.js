@@ -53,4 +53,6 @@ const sortPriceUp = (flowerA, flowerB) => {
   return weight ?? flowerA.price - flowerB.price;
 };
 
-export { filter, getClippedDescription, getImageSource, getAltTextImage, sortPriceDown, sortPriceUp };
+const getFilterValue = (inputValue) => inputValue.split('-')[1];
+
+export { filter, getClippedDescription, getImageSource, getAltTextImage, sortPriceDown, sortPriceUp, getFilterValue };

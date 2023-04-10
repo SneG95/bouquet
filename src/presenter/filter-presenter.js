@@ -1,7 +1,7 @@
 import { render, replace, remove } from '../framework/render.js';
 import FilterReasonView from '../view/filter-reason-view.js';
 import FilterColorView from '../view/filter-color-view.js';
-import { FilterReasonType, FilterColorType, ReasonDescription, ColorDescription } from '../consts.js';
+import { FilterReasonType, FilterColorType, ReasonDescription, ColorDescription, UpdateType } from '../consts.js';
 
 export default class FilterPresenter {
   #filterContainer = null;
@@ -105,12 +105,21 @@ export default class FilterPresenter {
     remove(prevFilterColorComponent);
   }
 
+  destroy() {
+    remove(this.#filterReasonComponent);
+    remove(this.#filterColorComponent);
+  }
+
   #handleModelEvent = () => {
     this.init();
   };
 
-  #handleFilterReasonTypeChange = () => {
+  #handleFilterReasonTypeChange = (filterType) => {
+    if (this.#filterModel.reasonFilter === filterType) {
+      return;
+    }
 
+    this.#filterModel.setReasonFilter(UpdateType.MAJOR, filterType);
   };
 
   #handleFilterColorTypeChange = () => {
