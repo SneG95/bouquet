@@ -61,11 +61,6 @@ const SortTypeDescription = {
   DESCENDING: 'сортировка по убыванию цены'
 };
 
-const ImageType = {
-  PNG: '.png',
-  WEBP: '.webp'
-};
-
 const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
@@ -73,5 +68,10 @@ const UpdateType = {
   INIT: 'INIT'
 };
 
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+  DELETE: 'DELETE'
+};
 
-export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription, ImageType, UpdateType };
+export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription, UpdateType, Method };

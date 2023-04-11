@@ -75,9 +75,10 @@ export default class BoardPresenter {
   #renderBoard() {
     const flowers = this.flowers;
     const flowersCount = flowers.length;
+    const cart = this.#flowersModel.cart;
 
     if (flowersCount === 0) {
-      this.#renderHeader();
+      this.#renderHeader(cart);
       this.#renderHero();
       this.#renderMission();
       this.#renderAdvantage();
@@ -91,7 +92,7 @@ export default class BoardPresenter {
       return;
     }
 
-    this.#renderHeader();
+    this.#renderHeader(cart);
     this.#renderHero();
     this.#renderMission();
     this.#renderAdvantage();
@@ -109,8 +110,10 @@ export default class BoardPresenter {
     this.#renderUpButton();
   }
 
-  #renderHeader() {
-    this.#headerComponent = new HeaderView();
+  #renderHeader(cart) {
+    this.#headerComponent = new HeaderView({
+      cart: cart
+    });
     render(this.#headerComponent, this.#headerContainer);
   }
 

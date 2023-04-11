@@ -1,7 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-const createHeaderTemplate = () => (
-  `<div class="header__container">
+const createHeaderTemplate = (cart) => {
+  const {productCount, sum} = cart;
+  return(`
+  <div class="header__container">
     <div class="header-count">
       <button class="header-count__btn" type="button">
         <svg width="60" height="47" aria-hidden="true">
@@ -10,26 +12,29 @@ const createHeaderTemplate = () => (
         <span class="visually-hidden">закрыть</span>
       </button>
       <div class="header-count__count">
-        <p class="text text--size-20 header-count__counter">4</p>
+        <p class="text text--size-20 header-count__counter">${productCount}</p>
       </div>
       <div class="header-count__block">
         <p class="text text--size-20 header-count__text">сумма</p>
         <b class="price price--size-min header-count__price">
-          15 700
+          ${sum}
           <span>Р</span>
         </b>
       </div>
     </div>
   </div>`
-);
+  );
+};
 
 export default class HeaderView extends AbstractView {
+  #cart = null;
 
-  constructor() {
+  constructor({cart}) {
     super();
+    this.#cart = cart;
   }
 
   get template() {
-    return createHeaderTemplate();
+    return createHeaderTemplate(this.#cart);
   }
 }

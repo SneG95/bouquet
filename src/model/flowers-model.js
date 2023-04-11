@@ -3,7 +3,8 @@ import { UpdateType } from '../consts.js';
 
 export default class FlowersModel extends Observable {
   #flowersApiService = null;
-  #flowers = [];
+  #flowers = null;
+  #cart = null;
 
   constructor({flowersApiService}) {
     super();
@@ -14,11 +15,17 @@ export default class FlowersModel extends Observable {
     return this.#flowers;
   }
 
+  get cart() {
+    return this.#cart;
+  }
+
   async init() {
     try {
       this.#flowers = await this.#flowersApiService.flowers;
+      this.#cart = await this.#flowersApiService.cart;
     } catch(err) {
       this.#flowers = [];
+      //this.#cart = {};
     }
 
     this._notify(UpdateType.INIT);

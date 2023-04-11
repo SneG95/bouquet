@@ -1,4 +1,4 @@
-import { FilterReasonType, FilterColorType, ServerReasonType, ServerColorType, ImageType } from './consts.js';
+import { FilterReasonType, FilterColorType, ServerReasonType, ServerColorType } from './consts.js';
 
 const MAX_DESCRIPTION_LENGTH = 139;
 
@@ -19,7 +19,7 @@ const filter = {
 
 const getClippedDescription = (description) => `${description.slice(0, MAX_DESCRIPTION_LENGTH)}...`;
 
-const getImageSource = (source) => source.split(/.png|,|.webp/)[0];
+const getImageSource = (source) => source.split('.png')[0];
 
 const getAltTextImage = (source) => {
   const items = source.split('/');
