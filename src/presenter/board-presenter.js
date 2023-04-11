@@ -39,6 +39,7 @@ export default class BoardPresenter {
   #upButtonComponent = null;
   #renderedFlowerCount = FLOWER_COUNT_PER_STEP;
   #flowerPresenters = new Map();
+  #cart = null;
 
   constructor({flowersModel, filterModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
@@ -75,10 +76,10 @@ export default class BoardPresenter {
   #renderBoard() {
     const flowers = this.flowers;
     const flowersCount = flowers.length;
-    const cart = this.#flowersModel.cart;
+    this.#cart = this.#flowersModel.cart;
 
     if (flowersCount === 0) {
-      this.#renderHeader(cart);
+      this.#renderHeader(this.#cart);
       this.#renderHero();
       this.#renderMission();
       this.#renderAdvantage();
@@ -92,7 +93,7 @@ export default class BoardPresenter {
       return;
     }
 
-    this.#renderHeader(cart);
+    this.#renderHeader(this.#cart);
     this.#renderHero();
     this.#renderMission();
     this.#renderAdvantage();
@@ -100,7 +101,7 @@ export default class BoardPresenter {
     render(this.#boardComponent, this.#mainContainer);
     this.#renderSort();
     this.#renderFlowersList();
-    this.#renderFlowers(flowers.slice(0, Math.min(flowersCount, this.#renderedFlowerCount)));
+    this.#renderFlowers(flowers.slice(0, Math.min(flowersCount, this.#renderedFlowerCount)), this.#cart);
     render(this.#buttonsListComponent, this.#boardComponent.catalogueContainer);
 
     if (flowersCount > this.#renderedFlowerCount) {
@@ -155,13 +156,14 @@ export default class BoardPresenter {
     render(this.#flowersListComponent, this.#boardComponent.catalogueContainer);
   }
 
-  #renderFlowers(flowers) {
-    flowers.forEach((flower) => this.#renderFlower(flower));
+  #renderFlowers(flowers, cart) {
+    flowers.forEach((flower) => this.#renderFlower(flower, Object.keys(cart.products).includes(flower.id)));
   }
 
-  #renderFlower(flower) {
+  #renderFlower(flower, isChecked) {
     const flowerPresenter = new FlowerPresenter({
-      flowersListContainer: this.#flowersListComponent.element
+      flowersListContainer: this.#flowersListComponent.element,
+      isChecked: isChecked
     });
 
     flowerPresenter.init(flower);
@@ -253,7 +255,7 @@ export default class BoardPresenter {
     const newRenderedFlowerCount = Math.min(flowerCount, this.#renderedFlowerCount + FLOWER_COUNT_PER_STEP);
     const flowers = this.flowers.slice(this.#renderedFlowerCount, newRenderedFlowerCount);
 
-    this.#renderFlowers(flowers);
+    this.#renderFlowers(flowers, this.#cart);
     this.#renderedFlowerCount = newRenderedFlowerCount;
 
     if (this.#renderedFlowerCount >= flowerCount) {

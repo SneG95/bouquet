@@ -5,9 +5,11 @@ export default class FlowerPresenter {
   #flowersListContainer = null;
   #flowerCardComponent = null;
   #flower = null;
+  #isChecked = false;
 
-  constructor({flowersListContainer}) {
+  constructor({flowersListContainer, isChecked}) {
     this.#flowersListContainer = flowersListContainer;
+    this.#isChecked = isChecked;
   }
 
   async init(flower) {
@@ -16,7 +18,8 @@ export default class FlowerPresenter {
     const prevFlowerCardComponent = this.#flowerCardComponent;
 
     this.#flowerCardComponent = new FlowerCardView({
-      flower: this.#flower
+      flower: this.#flower,
+      isChecked: this.#isChecked
     });
 
     if (prevFlowerCardComponent === null) {
