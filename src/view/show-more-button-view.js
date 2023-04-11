@@ -5,10 +5,12 @@ const createShowMoreButtonTemplate = () => `<button class="btn btn--outlined cat
 
 export default class ShowMoreButtonView extends AbstractView {
   #handleClick = null;
+  #isEmpty = false;
 
-  constructor({onClick}) {
+  constructor({onClick, isEmpty}) {
     super();
     this.#handleClick = onClick;
+    this.#isEmpty = isEmpty;
 
     this.element.addEventListener('click', this.#clickHandler);
   }
@@ -19,6 +21,8 @@ export default class ShowMoreButtonView extends AbstractView {
 
   #clickHandler = (evt) => {
     evt.preventDefault();
-    this.#handleClick();
+    if (!this.#isEmpty) {
+      this.#handleClick();
+    }
   };
 }

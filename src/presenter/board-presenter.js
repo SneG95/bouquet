@@ -6,6 +6,7 @@ import AdvantageView from '../view/advantage-view.js';
 import FilterPresenter from './filter-presenter.js';
 import BoardView from '../view/board-view.js';
 import SortView from '../view/sort-view.js';
+import ListEmptyView from '../view/list-empty-view.js';
 import ButtonsListView from '../view/buttons-list-view.js';
 import FlowersListView from '../view/flowers-list-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
@@ -29,6 +30,7 @@ export default class BoardPresenter {
   #missionComponent = null;
   #advantageComponent = null;
   #boardComponent = new BoardView();
+  #listEmptyComponent = null;
   #currentSortType = SortType.DEFAULT;
   #sortComponent = null;
   #flowersListComponent = new FlowersListView();
@@ -73,6 +75,21 @@ export default class BoardPresenter {
   #renderBoard() {
     const flowers = this.flowers;
     const flowersCount = flowers.length;
+
+    if (flowersCount === 0) {
+      this.#renderHeader();
+      this.#renderHero();
+      this.#renderMission();
+      this.#renderAdvantage();
+      this.#renderFilters();
+      render(this.#boardComponent, this.#mainContainer);
+      this.#renderSort();
+      this.#renderListEmpty();
+      render(this.#buttonsListComponent, this.#boardComponent.catalogueContainer);
+      this.#renderShowMoreButton(true);
+      this.#renderUpButton();
+      return;
+    }
 
     this.#renderHeader();
     this.#renderHero();
@@ -148,9 +165,15 @@ export default class BoardPresenter {
     this.#flowerPresenters.set(flower.id, flowerPresenter);
   }
 
-  #renderShowMoreButton() {
+  #renderListEmpty() {
+    this.#listEmptyComponent = new ListEmptyView();
+    render(this.#listEmptyComponent, this.#boardComponent.catalogueContainer);
+  }
+
+  #renderShowMoreButton(isEmpty = false) {
     this.#showMoreButtonComponent = new ShowMoreButtonView({
-      onClick: this.#handleShowMoreButtonClick
+      onClick: this.#handleShowMoreButtonClick,
+      isEmpty: isEmpty
     });
 
     render(this.#showMoreButtonComponent, this.#buttonsListComponent.element);
@@ -176,6 +199,7 @@ export default class BoardPresenter {
     remove(this.#missionComponent);
     remove(this.#advantageComponent);
     remove(this.#sortComponent);
+    remove(this.#listEmptyComponent);
     remove(this.#showMoreButtonComponent);
 
     this.#renderedFlowerCount = resetRenderedFlowerCount ? FLOWER_COUNT_PER_STEP : Math.min(flowerCount, this.#renderedFlowerCount);
