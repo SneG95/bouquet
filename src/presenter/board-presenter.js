@@ -12,7 +12,8 @@ import FlowersListView from '../view/flowers-list-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UpButtonView from '../view/up-button-view.js';
 import FlowerPresenter from './flower-presenter.js';
-import { SortType, UpdateType, FilterReasonType, FilterColorType } from '../consts.js';
+import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import { SortType, UpdateType, FilterReasonType, FilterColorType, TimeLimit, UserAction } from '../consts.js';
 import { sortPriceDown, sortPriceUp, filter } from '../utils.js';
 
 const FLOWER_COUNT_PER_STEP = 6;
@@ -40,6 +41,10 @@ export default class BoardPresenter {
   #renderedFlowerCount = FLOWER_COUNT_PER_STEP;
   #flowerPresenters = new Map();
   #cart = null;
+  #uiBlocker = new UiBlocker({
+    lowerLimit: TimeLimit.LOWER_LIMIT,
+    upperLimit: TimeLimit.UPPER_LIMIT
+  });
 
   constructor({flowersModel, filterModel, mainContainer, headerContainer}) {
     this.#flowersModel = flowersModel;
@@ -163,7 +168,8 @@ export default class BoardPresenter {
   #renderFlower(flower, isChecked) {
     const flowerPresenter = new FlowerPresenter({
       flowersListContainer: this.#flowersListComponent.element,
-      isChecked: isChecked
+      isChecked: isChecked,
+      onDataChange: this.#handleViewAction
     });
 
     flowerPresenter.init(flower);
@@ -222,6 +228,31 @@ export default class BoardPresenter {
     this.#currentSortType = sortType;
     this.#clearBoard({resetRenderedFilmCount: true});
     this.#renderBoard();
+  };
+
+  #handleViewAction = async (actionType, updateType, update) => {
+    this.#uiBlocker.block();
+
+    switch (actionType) {
+      case UserAction.ADD_TO_FAVORITE:
+        //this.#newEventPresenter.setSaving();
+        try {
+          await this.#flowersModel.addToFavorite(updateType, update);
+        } catch(err) {
+          //this.#newEventPresenter.setAborting();
+        }
+        break;
+      case UserAction.DELETE_FROM_FAVORITE:
+        //this.#pointPresenters.get(update.id).setDeleting();
+        try {
+          await this.#flowersModel.deleteFromFavorite(updateType, update);
+        } catch(err) {
+          //this.#pointPresenters.get(update.id).setAborting();
+        }
+        break;
+    }
+
+    this.#uiBlocker.unblock();
   };
 
   #handleModelEvent = (updateType, data) => {

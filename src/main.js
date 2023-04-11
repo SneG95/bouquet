@@ -54,5 +54,5 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   flowersModel.init();
-  //boardPresenter.init();
+  boardPresenter.init();
 });

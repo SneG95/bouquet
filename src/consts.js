@@ -74,4 +74,19 @@ const Method = {
   DELETE: 'DELETE'
 };
 
-export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription, UpdateType, Method };
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING'
+};
+
+const UserAction = {
+  ADD_TO_FAVORITE: 'ADD_TO_FAVORITE',
+  DELETE_FROM_FAVORITE: 'DELETE_FROM_FAVORITE'
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
+export { FilterReasonType, ReasonDescription, FilterColorType, ColorDescription, ServerReasonType, ServerColorType, SortType, SortTypeDescription, UpdateType, Method, Mode, UserAction, TimeLimit };

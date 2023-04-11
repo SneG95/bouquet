@@ -30,4 +30,24 @@ export default class FlowersModel extends Observable {
 
     this._notify(UpdateType.INIT);
   }
+
+  async addToFavorite(updateType, update) {
+    try {
+      await this.#flowersApiService.addToFavorite(update);
+      this.#cart = await this.#flowersApiService.cart;
+      this._notify(updateType, update);
+    } catch(err) {
+      throw new Error('Can\'t add to favorite');
+    }
+  }
+
+  async deleteFromFavorite(updateType, update) {
+    try {
+      await this.#flowersApiService.deleteFromFavorite(update);
+      this.#cart = await this.#flowersApiService.cart;
+      this._notify(updateType);
+    } catch(err) {
+      throw new Error('Can\'t delete flower from favorite');
+    }
+  }
 }

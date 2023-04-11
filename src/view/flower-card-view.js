@@ -44,15 +44,25 @@ const createFlowerCardTemplate = (flower, isChecked) => {
 
 export default class FlowerCardView extends AbstractView {
   #flower = null;
-  #isChecked = false;
+  #isChecked = null;
+  #handleFavoriteClick = null;
 
-  constructor({flower, isChecked}) {
+  constructor({flower, isChecked, onFavoriteClick}) {
     super();
     this.#flower = flower;
     this.#isChecked = isChecked;
+    this.#handleFavoriteClick = onFavoriteClick;
+
+    this.element.querySelector('.button-heart')
+      .addEventListener('click', this.#favoriteClickHandler);
   }
 
   get template() {
     return createFlowerCardTemplate(this.#flower, this.#isChecked);
   }
+
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFavoriteClick();
+  };
 }

@@ -11,4 +11,24 @@ export default class FlowersApiService extends ApiService {
     return this._load({url: 'cart'})
       .then(ApiService.parseResponse);
   }
+
+  async addToFavorite(flowerId) {
+    const response = await this._load({
+      url: `products/${flowerId}`,
+      method: Method.PUT,
+    });
+
+    const parsedResponse = await ApiService.parseResponse(response);
+
+    return parsedResponse;
+  }
+
+  async deleteFromFavorite(flowerId) {
+    const response = await this._load({
+      url: `products/${flowerId}`,
+      method: Method.DELETE,
+    });
+
+    return response;
+  }
 }
