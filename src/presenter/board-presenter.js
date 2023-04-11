@@ -52,7 +52,9 @@ export default class BoardPresenter {
     this.#filterReasonType = this.#filterModel.reasonFilter;
     this.#filterColorTypes = this.#filterModel.colorFilters;
     const flowers = this.#flowersModel.flowers;
-    const filteredFlowers = filter[this.#filterReasonType](flowers);
+    const filteredFlowers = filter[this.#filterReasonType](flowers).filter((flower) => (
+      this.#filterColorTypes.includes(FilterColorType.ALL) ? true : this.#filterColorTypes.includes(flower.color))
+    );
 
     switch (this.#currentSortType) {
       case SortType.INCREASE:
