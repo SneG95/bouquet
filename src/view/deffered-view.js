@@ -1,6 +1,10 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-const createDefferedTemplate = () => (`
+const createDefferedTemplate = (cart) => {
+  const productCount = 0;
+  const sum = 0;
+
+  return (`
   <section class="popup-deferred" style="display:block;">
     <div class="popup-deferred__wrapper">
       <div class="popup-deferred__container">
@@ -21,26 +25,34 @@ const createDefferedTemplate = () => (`
           <p class="text text--total">Итого вы выбрали:</p>
           <div class="popup-deferred__block-wrap">
             <div class="popup-deferred__block">
-              <p class="text text--total">Букеты</p><span class="popup-deferred__count" data-atribut="count-defer">4</span>
+              <p class="text text--total">Букеты</p><span class="popup-deferred__count" data-atribut="count-defer">${cart.productCount ? cart.productCount : productCount}</span>
             </div>
             <div class="popup-deferred__block">
-              <p class="text text--total">Сумма</p><b class="price price--size-middle-p">15 700<span>Р</span></b>
+              <p class="text text--total">Сумма</p><b class="price price--size-middle-p">${cart.sum ? cart.sum : sum}<span>Р</span></b>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>`
-);
+  );
+};
 
 export default class DefferedView extends AbstractView {
+  #handleClick = null;
+  #cart = null;
 
-  /*constructor({}) {
+  constructor({onClick, cart}) {
     super();
-  }*/
+    this.#handleClick = onClick;
+    this.#cart = cart;
+
+    this.element.querySelector('a')
+      .addEventListener('click', this.#clickHandler);
+  }
 
   get template() {
-    return createDefferedTemplate();
+    return createDefferedTemplate(this.#cart);
   }
 
   get popupDefferedContainer() {
@@ -50,5 +62,12 @@ export default class DefferedView extends AbstractView {
   get flowersContainer() {
     return this.element.querySelector('ul');
   }
+
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    if (evt.target.tagName === 'svg' || evt.target.tagName === 'A') {
+      this.#handleClick();
+    }
+  };
 
 }

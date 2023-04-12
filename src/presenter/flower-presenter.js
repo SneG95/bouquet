@@ -30,13 +30,11 @@ export default class FlowerPresenter {
 
     if (prevFlowerCardComponent === null) {
       render(this.#flowerCardComponent, this.#flowersListContainer);
-      //return;
     }
   }
 
   destroy() {
     remove(this.#flowerCardComponent);
-    //remove(this.#filmPopupComponent);
   }
 
   renderFlowerDefferedComponent(cartContainer) {

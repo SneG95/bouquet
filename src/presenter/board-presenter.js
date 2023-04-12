@@ -42,6 +42,7 @@ export default class BoardPresenter {
   #renderedFlowerCount = FLOWER_COUNT_PER_STEP;
   #flowerPresenters = new Map();
   #cart = null;
+  #cartPresenter = null;
   #uiBlocker = new UiBlocker({
     lowerLimit: TimeLimit.LOWER_LIMIT,
     upperLimit: TimeLimit.UPPER_LIMIT
@@ -239,31 +240,18 @@ export default class BoardPresenter {
 
     switch (actionType) {
       case UserAction.ADD_TO_FAVORITE:
-        //this.#newEventPresenter.setSaving();
-        try {
-          await this.#flowersModel.addToFavorite(updateType, update);
-        } catch(err) {
-          //this.#newEventPresenter.setAborting();
-        }
+        await this.#flowersModel.addToFavorite(updateType, update);
         break;
       case UserAction.DELETE_FROM_FAVORITE:
-        //this.#pointPresenters.get(update.id).setDeleting();
-        try {
-          await this.#flowersModel.deleteFromFavorite(updateType, update);
-        } catch(err) {
-          //this.#pointPresenters.get(update.id).setAborting();
-        }
+        await this.#flowersModel.deleteFromFavorite(updateType, update);
         break;
     }
 
     this.#uiBlocker.unblock();
   };
 
-  #handleModelEvent = (updateType, data) => {
+  #handleModelEvent = (updateType) => {
     switch (updateType) {
-      case UpdateType.PATCH:
-        this.#flowerPresenters.get(data.id).init(data);
-        break;
       case UpdateType.MINOR:
         this.#clearBoard();
         this.#renderBoard();
@@ -273,15 +261,8 @@ export default class BoardPresenter {
         this.#renderBoard();
         break;
       case UpdateType.INIT:
-        /*this.#isLoading = false;
-        remove(this.#loadingComponent);*/
         this.#renderBoard();
         break;
-      /*case UpdateType.ERROR:
-        this.#isLoading = false;
-        remove(this.#loadingComponent);
-        this.#renderListEmpty(true);
-        break;*/
     }
   };
 
@@ -304,11 +285,14 @@ export default class BoardPresenter {
 
   #handleCartClick = () => {
     const flowers = this.flowers.filter((flower) => Object.keys(this.#cart.products).includes(flower.id));
-    const cartPresenter = new CartPresenter({
+    this.#cartPresenter = new CartPresenter({
       mainContainer: this.#mainContainer,
-      flowerPresenters: this.#flowerPresenters
+      flowerPresenters: this.#flowerPresenters,
+      cart: this.#cart,
+      sortComponent: this.#sortComponent
     });
 
-    cartPresenter.init(flowers);
+    this.#mainContainer.style.display = 'none';
+    this.#cartPresenter.init(flowers);
   };
 }
