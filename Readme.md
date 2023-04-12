@@ -1,7 +1,7 @@
-# Проект «{{projectTitle}}»
+# Проект «bouquet»
 
-* Студент: [{{userName}}]({{userProfile}}).
-
+* Студент: [Дмитрий Носков](https://up.htmlacademy.ru/ecmascript/19/user/1087569).
+* Количество часов: 17
 ---
 
 _Не удаляйте и не изменяйте папки и файлы:_
