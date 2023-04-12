@@ -1,7 +1,8 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
 const createHeaderTemplate = (cart) => {
-  const {productCount, sum} = cart;
+  const productCount = 0;
+  const sum = 0;
   return(`
   <div class="header__container">
     <div class="header-count">
@@ -12,12 +13,12 @@ const createHeaderTemplate = (cart) => {
         <span class="visually-hidden">закрыть</span>
       </button>
       <div class="header-count__count">
-        <p class="text text--size-20 header-count__counter">${productCount}</p>
+        <p class="text text--size-20 header-count__counter">${cart.productCount ? cart.productCount : productCount}</p>
       </div>
       <div class="header-count__block">
         <p class="text text--size-20 header-count__text">сумма</p>
         <b class="price price--size-min header-count__price">
-          ${sum}
+          ${cart.sum ? cart.sum : sum}
           <span>Р</span>
         </b>
       </div>

@@ -18,9 +18,7 @@ export default class FlowersApiService extends ApiService {
       method: Method.PUT,
     });
 
-    const parsedResponse = await ApiService.parseResponse(response);
-
-    return parsedResponse;
+    return response;
   }
 
   async deleteFromFavorite(flowerId) {

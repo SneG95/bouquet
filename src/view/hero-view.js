@@ -21,7 +21,22 @@ const createHeroTemplate = () => (`
 );
 
 export default class HeroView extends AbstractView {
+  #handleClick = null;
+
+  constructor({onClick}) {
+    super();
+    this.#handleClick = onClick;
+
+    this.element.querySelector('a')
+      .addEventListener('click', this.#clickHandler);
+  }
+
   get template() {
     return createHeroTemplate();
   }
+
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleClick();
+  };
 }

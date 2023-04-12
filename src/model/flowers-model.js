@@ -25,7 +25,6 @@ export default class FlowersModel extends Observable {
       this.#cart = await this.#flowersApiService.cart;
     } catch(err) {
       this.#flowers = [];
-      //this.#cart = {};
     }
 
     this._notify(UpdateType.INIT);

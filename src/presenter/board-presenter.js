@@ -124,7 +124,9 @@ export default class BoardPresenter {
   }
 
   #renderHero() {
-    this.#heroComponent = new HeroView();
+    this.#heroComponent = new HeroView({
+      onClick: this.#handleButtonToSortCatalogueClick
+    });
     render(this.#heroComponent, this.#mainContainer);
   }
 
@@ -162,7 +164,7 @@ export default class BoardPresenter {
   }
 
   #renderFlowers(flowers, cart) {
-    flowers.forEach((flower) => this.#renderFlower(flower, Object.keys(cart.products).includes(flower.id)));
+    flowers.forEach((flower) => this.#renderFlower(flower, Object.keys(cart).length === 0 ? false : Object.keys(cart.products).includes(flower.id)));
   }
 
   #renderFlower(flower, isChecked) {
@@ -192,7 +194,7 @@ export default class BoardPresenter {
 
   #renderUpButton() {
     this.#upButtonComponent = new UpButtonView({
-      onClick: this.#handleUpButtonClick
+      onClick: this.#handleButtonToSortCatalogueClick
     });
 
     render(this.#upButtonComponent, this.#buttonsListComponent.element);
@@ -294,7 +296,7 @@ export default class BoardPresenter {
     }
   };
 
-  #handleUpButtonClick = () => {
-
+  #handleButtonToSortCatalogueClick = () => {
+    this.#sortComponent.element.scrollIntoView({behavior: 'smooth'});
   };
 }
