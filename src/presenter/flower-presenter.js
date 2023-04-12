@@ -1,4 +1,4 @@
-import { render, remove, replace } from '../framework/render.js';
+import { render, remove } from '../framework/render.js';
 import FlowerCardView from '../view/flower-card-view.js';
 import { Mode, UpdateType, UserAction } from '../consts.js';
 
