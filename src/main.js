@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
     flowersApiService: new FlowersApiService(END_POINT, AUTHORIZATION)
   });
   const filterModel = new FilterModel();
-  const boardPresenter = new BoardPresenter({
+  new BoardPresenter({
     flowersModel,
     filterModel,
     mainContainer: mainContainer,
@@ -54,5 +54,4 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   flowersModel.init();
-  //boardPresenter.init();
 });

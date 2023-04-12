@@ -12,6 +12,7 @@ import FlowersListView from '../view/flowers-list-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UpButtonView from '../view/up-button-view.js';
 import FlowerPresenter from './flower-presenter.js';
+import CartPresenter from './cart-presenter.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 import { SortType, UpdateType, FilterReasonType, FilterColorType, TimeLimit, UserAction } from '../consts.js';
 import { sortPriceDown, sortPriceUp, filter } from '../utils.js';
@@ -118,7 +119,8 @@ export default class BoardPresenter {
 
   #renderHeader(cart) {
     this.#headerComponent = new HeaderView({
-      cart: cart
+      cart: cart,
+      onClick: this.#handleCartClick
     });
     render(this.#headerComponent, this.#headerContainer);
   }
@@ -298,5 +300,15 @@ export default class BoardPresenter {
 
   #handleButtonToSortCatalogueClick = () => {
     this.#sortComponent.element.scrollIntoView({behavior: 'smooth'});
+  };
+
+  #handleCartClick = () => {
+    const flowers = this.flowers.filter((flower) => Object.keys(this.#cart.products).includes(flower.id));
+    const cartPresenter = new CartPresenter({
+      mainContainer: this.#mainContainer,
+      flowerPresenters: this.#flowerPresenters
+    });
+
+    cartPresenter.init(flowers);
   };
 }

@@ -43,4 +43,12 @@ export default class DefferedView extends AbstractView {
     return createDefferedTemplate();
   }
 
+  get popupDefferedContainer() {
+    return this.element.querySelector('.popup-deferred__wrapper');
+  }
+
+  get flowersContainer() {
+    return this.element.querySelector('ul');
+  }
+
 }

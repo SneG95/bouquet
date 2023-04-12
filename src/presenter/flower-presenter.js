@@ -1,13 +1,14 @@
 import { render, remove } from '../framework/render.js';
 import FlowerCardView from '../view/flower-card-view.js';
-import { Mode, UpdateType, UserAction } from '../consts.js';
+import FlowerDefferedView from '../view/flower-deffered-view.js';
+import { UpdateType, UserAction } from '../consts.js';
 
 export default class FlowerPresenter {
   #flowersListContainer = null;
   #flowerCardComponent = null;
+  #flowerDefferedComponent = null;
   #flower = null;
   #isChecked = null;
-  #mode = Mode.DEFAULT;
   #handleDataChange = null;
 
   constructor({flowersListContainer, isChecked, onDataChange}) {
@@ -16,7 +17,7 @@ export default class FlowerPresenter {
     this.#handleDataChange = onDataChange;
   }
 
-  async init(flower) {
+  init(flower) {
     this.#flower = flower;
 
     const prevFlowerCardComponent = this.#flowerCardComponent;
@@ -36,6 +37,14 @@ export default class FlowerPresenter {
   destroy() {
     remove(this.#flowerCardComponent);
     //remove(this.#filmPopupComponent);
+  }
+
+  renderFlowerDefferedComponent(cartContainer) {
+    this.#flowerDefferedComponent = new FlowerDefferedView({
+      flower: this.#flower
+    });
+
+    render(this.#flowerDefferedComponent, cartContainer);
   }
 
   #handleFavoriteClick = () => {

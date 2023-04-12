@@ -29,13 +29,23 @@ const createHeaderTemplate = (cart) => {
 
 export default class HeaderView extends AbstractView {
   #cart = null;
+  #handleClick = null;
 
-  constructor({cart}) {
+  constructor({cart, onClick}) {
     super();
     this.#cart = cart;
+    this.#handleClick = onClick;
+
+    this.element.querySelector('button')
+      .addEventListener('click', this.#clickHandler);
   }
 
   get template() {
     return createHeaderTemplate(this.#cart);
   }
+
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleClick();
+  };
 }
